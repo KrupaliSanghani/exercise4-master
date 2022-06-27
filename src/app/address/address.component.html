@@ -1,0 +1,10 @@
+<!-- ---------Address input---------- -->
+
+<div class="col-12">
+    <label for="add">Address:</label>
+</div>
+<div class="col-12">
+    <textarea type="text" cols="70" rows="3" #added (keyup)="getAddress(added.value)" [value]="Address"
+        placeholder="Enter Address">
+            </textarea><br>
+</div>

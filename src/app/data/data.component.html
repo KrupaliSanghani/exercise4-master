@@ -1,0 +1,26 @@
+<div class="container container">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="taskHead">Task 3</h3>
+
+            <h4>Select Color</h4><br>
+
+            <!-- ----------green radio button------------ -->
+            <input type="radio" id="green" name="color" value="green" (click)="color = 'green'">
+            <label for="green" class="text-success ms-3"> green</label><br>
+
+            <!-- ----------yellow radio button------------ -->
+            <input type="radio" id="yellow" name="color" value="yellow" (click)="color = 'yellow'">
+            <label for="yellow" class="text-warning ms-3"> yellow</label><br>
+
+            <!-- ----------red radio button------------ -->
+            <input type="radio" id="red" name="color" value="red" (click)="color = 'red'">
+            <label for="red" class="text-danger ms-3"> red</label><br><br>
+
+
+            <!-- ---------- hover paragraph-------- -->
+            <p appTextColor [defaultColor]="'black'" [textColor]="color" class="d-inline">Lorem ipsum dolor sit amet
+                consectetur, adipisicing elit. Ipsum, at.</p>
+        </div>
+    </div>
+</div>

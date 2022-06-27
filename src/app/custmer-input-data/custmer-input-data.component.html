@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-5">
+
+            <!-- -------customer form ------ -->
+
+            <h3 class=" heading">Customer Form</h3>
+            <div class="col-12 mt-4">
+
+                <!-- ------------customer Name------------ -->
+                <label for="name">Name:</label><br>
+                <input required id="name" type="text" [(ngModel)]="customerName" class=" mb-3"
+                    placeholder="Enter Name"><br>
+                <p *ngIf="validName" class="text-danger">{{nameError}}</p>
+            </div>
+
+            <!-- ------------customer Email------------ -->
+            <div class="col-12">
+                <label for="email">Email:</label><br>
+                <input id="email" type="text" (change)="ckeckEmail();" [(ngModel)]="customerEmail" class="mb-3"
+                    placeholder="Enter Email">
+                <p *appUnless="validEmail" class="text-danger">{{emailError}}</p><br>
+            </div>
+
+            <!-- ------------customer Address------------ -->
+            <div class="col-12">
+                <app-address [Address]="customerAddress" (add)="getAddress($event)"></app-address>
+            </div>
+
+            <!-- ------------customer Status------------ -->
+            <div class="col-12 mt-2">
+                <label>Status:</label><br>
+
+                <!-- ----------active radio button------------ -->
+                <input type="radio" id="active" name="status" value="active" class="ms-3"
+                    (click)="customerStatus = 'Active'">
+                <label for="active" class="ms-2"> Active</label>
+
+
+                <!-- ----------inactive radio button------------ -->
+                <input type="radio" id="inactive" name="status" value="inactive" class="ms-3"
+                    (click)="customerStatus = 'Inactive'">
+                <label for="inactive" class="ms-2"> Inactive</label><br>
+
+                <!-- <select class="mb-3" [(ngModel)]="status">
+                <option *ngFor="let status of statusArr" [value]="status.name">
+                    {{status.name}}
+                </option>
+            </select> -->
+            </div>
+
+            <!-- ------submit data----- -->
+            <div class="col-12 mb-5 my-3">
+                <button type="submit" id="submit" disabled
+                    [disabled]=" customerEmail === '' || customerAddress === '' || customerStatus === ''"
+                    (click)=" onSubmit()">{{editMode ? 'Update': 'Submit'}}</button>
+            </div>
+        </div>
+
+
+        <!-- <hr> -->
+
+        <div class="col-7">
+            <!-- ------------ customer display component-------- -->
+            <app-customer-display-data [displayArr]="customerArr" (editData)="editName($event)">
+                <h3 class="heading">Customer List</h3>
+            </app-customer-display-data>
+
+            <!-- <app-customer-display-data (editData)="editName($event)">
+            <h3 class="heading">Customer List</h3>
+        </app-customer-display-data> -->
+        </div>
+    </div>
+</div>
