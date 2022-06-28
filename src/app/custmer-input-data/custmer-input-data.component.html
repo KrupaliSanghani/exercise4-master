@@ -9,7 +9,7 @@
 
                 <!-- ------------customer Name------------ -->
                 <label for="name">Name:</label><br>
-                <input required id="name" type="text" [(ngModel)]="customerName" class=" mb-3"
+                <input required id="name" type="text" (change)="ckeckName();" [(ngModel)]="customerName" class=" mb-3"
                     placeholder="Enter Name"><br>
                 <p *ngIf="validName" class="text-danger">{{nameError}}</p>
             </div>
@@ -18,8 +18,9 @@
             <div class="col-12">
                 <label for="email">Email:</label><br>
                 <input id="email" type="text" (change)="ckeckEmail();" [(ngModel)]="customerEmail" class="mb-3"
-                    placeholder="Enter Email">
-                <p *appUnless="validEmail" class="text-danger">{{emailError}}</p><br>
+                    placeholder="Enter Email" [disabled]=" editMode == true">
+                <p *appUnless="validEmail" class="text-danger">{{emailError}}</p>
+                <p *ngIf="existsEmail" class="text-danger">{{emailExists}}</p>
             </div>
 
             <!-- ------------customer Address------------ -->
@@ -42,23 +43,16 @@
                     (click)="customerStatus = 'Inactive'">
                 <label for="inactive" class="ms-2"> Inactive</label><br>
 
-                <!-- <select class="mb-3" [(ngModel)]="status">
-                <option *ngFor="let status of statusArr" [value]="status.name">
-                    {{status.name}}
-                </option>
-            </select> -->
             </div>
 
             <!-- ------submit data----- -->
             <div class="col-12 mb-5 my-3">
-                <button type="submit" id="submit" disabled
+                <button type="submit" id="submit" class="btn submit" disabled
                     [disabled]=" customerEmail === '' || customerAddress === '' || customerStatus === ''"
-                    (click)=" onSubmit()">{{editMode ? 'Update': 'Submit'}}</button>
+                    (click)=" onSubmit()" (click)="sortName('Name')">{{editMode ? 'Update': 'Submit'}}</button>
             </div>
         </div>
 
-
-        <!-- <hr> -->
 
         <div class="col-7">
             <!-- ------------ customer display component-------- -->

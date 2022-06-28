@@ -8,44 +8,31 @@
     background-color: red;
 }
 
+/* --------------table header--------- */
 .tableHeader{
     cursor: pointer;
-
 }
-
-/* .noData{ */
-    /* margin: 50px; */
-/* } */
 
 .addressHead{
     max-width: 950px;
     overflow-x:auto;
 }
 
-/* .address{ */
-    /* text-overflow: ellipsis;
-    overflow: hidden; */
-/* } */
 
-.add {
-    /* font-size: 16px;
-    line-height: 16px;
-    height: 32px;
-    overflow: hidden; */
+/* ----------for address data------ */
+ .add {
+       width:200px;
+      display:block;
+   height: 6vh;
+      overflow: hidden;
+      text-overflow: ellipsis;
+     } 
 
+
+.add:hover {
     display:block;
     width:200px;
-    /* height: 200px; */
     overflow-y: hidden;
     word-wrap:break-word;
-
-    /* white-space: nowrap; 
-    width: 150px; 
-    overflow: hidden;
-    text-overflow: ellipsis;  */
-    /* border: 1px solid #000000; */
-}
-.show {
-    overflow: visible;
     height: auto;
 }

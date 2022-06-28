@@ -8,61 +8,30 @@ import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angu
   styleUrls: ['./customer-display-data.component.css']
 })
 export class CustomerDisplayDataComponent implements OnInit, OnChanges {
-  @Input() displayArr;
+  @Input() displayArr = [];
   @Output() editData = new EventEmitter();
 
-  status = 'All';
+  status: string = 'All';
   // displayArr = [];
-  // editData;
 
   displayInactiveArr = [];
+  displayStatusArr = [];
+  // -------sorting var------
+  isDesc: boolean = true;
+  Email: Boolean = true;
+  Address: Boolean = true;
 
-  isDesc = true;
-  // direction = -1;
 
-
-
+  // --------status dropdown-----
   statusArr: { id: number, name: string }[] = [
     { "id": 1, "name": "Active" },
     { "id": 2, "name": "Inactive" },
     { "id": 3, "name": "All" }
   ];
 
-
-  //   statusArr() : Array<any> {return [
-  //     { id: 1, name: "Active" },
-  //     { id: 2, name: "Inactive" },
-  //     { id: 2, name: "All" }
-  //   ];
-  // };
-
-
-  // -----------for filter active and inactive------------
-  isActive: boolean = false;
-  isInactive: boolean = false;
-  direction: number;
-
   // constructor(private customerdata: CustomerDataService) { }
 
   ngOnInit(): void {
-
-
-
-    // onActive()
-
-    // if (this.displayArr.Status == 'Active') {
-    //   this.displayStatusArr = this.displayArr.filter((displayArr: { Status: string; }) => displayArr.Status == 'Active');
-    // }
-    // else if (this.displayArr.Status == 'Inactive') {
-    //   this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == 'Inactive');
-    // }
-
-
-    // // this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == 'Inactive');
-    // // this.displayStatusArr = this.displayArr;
-    // console.log(this.displayStatusArr);
-
-
   }
 
   ngOnChanges() {
@@ -71,76 +40,31 @@ export class CustomerDisplayDataComponent implements OnInit, OnChanges {
     console.log(this.displayStatusArr);
   }
 
-  displayStatusArr = [];
 
+  // ----------- filter by status------
   onStatus() {
-
     console.log(this.status);
-
     this.status == 'All' ? (this.displayStatusArr = this.displayArr) : (this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == this.status));
-
-    // 
-    // this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == 'Inactive');
-    // console.log(value);
-
-
-
-    // if (this.status == 'Active') {
-    //   this.displayStatusArr = this.displayArr.filter((displayArr: { Status: string; }) => displayArr.Status == 'Active');
-    //   console.log(this.displayStatusArr);
-    // }
-    // else if (value == 'Inactive') {
-    //   this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == 'Inactive');
-    //   // console.log(this.displayStatusArr);
-    // }
-
-
-    // this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == 'Inactive');
-    // this.displayStatusArr = this.displayArr;
-    // console.log(this.displayStatusArr);
 
   }
 
-  // ----------display inactive status-------
-  // onInactive() {
-  // this.status = false;
-  // this.isActive = false;
-  // this.isInactive = true;
-  // console.log(this.displayArr);
-  // this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == 'Inactive');
-
-  // }
-
-  // ----------display all status-------
-  // onAll() {
-  //   this.isActive = false;
-  //   // this.isInactive = false;
-  //   // this.status = true;
-  //   console.log(this.displayArr);
-  // }
 
   // ------for Edit Data---------
   onEdit(data: any) {
     console.log(this.editData);
-    // this.customerdata.editval(data);
     this.editData.emit(data);
   }
 
-  // ---------------sorting----------
-
-
-
-
+  // ---------------sorting by Name----------
   sortName(property: string) {
     this.isDesc = !this.isDesc;
-
-    this.direction = this.isDesc ? 1 : -1;
+    var direction = this.isDesc ? 1 : -1;
     this.displayArr.sort(function (a, b) {
       if (a[property] < b[property]) {
-        return -1 * this.direction;
+        return -1 * direction;
       }
       else if (a[property] > b[property]) {
-        return 1 * this.direction;
+        return 1 * direction;
       }
       else {
         return 0;
@@ -148,8 +72,39 @@ export class CustomerDisplayDataComponent implements OnInit, OnChanges {
     });
   }
 
+  // ---------------sorting by email----------
+  sortEmail(property: string) {
+    this.Email = !this.Email;
+    var direction = this.Email ? 1 : -1;
+    this.displayArr.sort(function (a, b) {
+      if (a[property] < b[property]) {
+        return -1 * direction;
+      }
+      else if (a[property] > b[property]) {
+        return 1 * direction;
+      }
+      else {
+        return 0;
+      }
+    });
+  }
 
-
+  // ---------------sorting by address----------
+  sortAddress(property: string) {
+    this.Address = !this.Address;
+    var direction = this.Address ? 1 : -1;
+    this.displayArr.sort(function (a, b) {
+      if (a[property] < b[property]) {
+        return -1 * direction;
+      }
+      else if (a[property] > b[property]) {
+        return 1 * direction;
+      }
+      else {
+        return 0;
+      }
+    });
+  }
 
 }
 

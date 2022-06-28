@@ -1,4 +1,5 @@
 import { Component, OnInit, } from '@angular/core';
+import { subscribeOn } from 'rxjs';
 // import { CustomerDataService } from '../customer-data.service';
 
 
@@ -17,22 +18,28 @@ export class CustmerInputDataComponent implements OnInit {
   customerAddress: string = '';
   customerStatus: string = '';
 
+
   // -----display validation error---------
   nameError: string = 'Enter Name';
   emailError: string = 'Enter valid Email';
+  emailExists: string = 'Email already exists.';
 
   validName: boolean = false;
   validEmail: boolean = true;
   validAddress: boolean = false;
+  existsEmail: boolean = false;
   valid: string;
+  isDesc: boolean = true;
+  emailVal: string;
+  emailArr = [];
 
+  // ------edit data------
+  editMode: boolean = false;
 
   // -------store customer data---------
   customerArr = [];
-  getEditArr = [];
   customerChangeArr = [];
-  editMode: boolean = false;
-  isDesc: boolean = true;
+
 
 
   // ------------take address value from another component----
@@ -40,132 +47,87 @@ export class CustmerInputDataComponent implements OnInit {
     this.customerAddress = val;
   }
 
-
-  // sortArr = [];
-
-
   // constructor(private customerdata: CustomerDataService) { }
 
   ngOnInit(): void {
-    // console.log(this.getEditArr);
-    // console.log(this.getEditArr)
-    // this.getEditArr = this.customerdata.getEdit();
-    // this.customerName = this.getEditArr.Data
-    // console.log();
+    this.sortName('customerName');
   }
+
 
   // ----------check email validation-----------
   ckeckEmail() {
     this.valid = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
     if (this.customerEmail.match(this.valid)) {
       this.validEmail = true;
-
+      console.log(this.emailArr);
     }
     else {
       this.validEmail = false;
-
     }
   }
 
+  // ----------check name validation-----------
+  ckeckName() {
+    this.customerName == ' ' ? (this.validName = true) : (this.validName = false);
+  }
+
+
+  // ----------By default sort----------
+  sortName(property: any) {
+    var direction = this.isDesc ? 1 : -1;
+    this.customerArr.sort(function (a, b) {
+      if (a[property] < b[property]) {
+        return -1 * direction;
+      }
+      else if (a[property] > b[property]) {
+        return 1 * direction;
+      }
+      else {
+        return 0;
+      }
+    });
+  }
 
 
   // ------------submit customer data---------
   onSubmit() {
 
 
-
-    // ----------check email validation-----------
+    // ----------check validation-----------
+    this.emailVal = this.emailArr.find(element => element == this.customerEmail);
+    this.emailArr.push(this.customerEmail);
+    console.log(this.emailVal);
 
     if (this.customerEmail.match(this.valid) && this.customerName !== ' ') {
 
-      this.validName = false;
+      // --------------for update data--------
 
       if (this.editMode) {
-        console.log('edit');
-        // this.editMode = false;
         this.editMode = true;
         this.customerChangeArr.push({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
-
         this.customerArr = this.customerArr.map(obj => this.customerChangeArr.find(o => o.Email === obj.Email) || obj);
-
-
-
-        // console.log(this.customerChangeArr);
-        // this.customerArr = this.customerArr.filter(Arr => Arr.Email == this.customerChangeArr);
-        // this.customerArr.map(obj => this.customerArr.find(o => o.Email === obj.Email) || obj)
-
-        console.log(this.customerArr);
-        // this.customerArr.push({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress })
+        console.log(this.customerChangeArr);
         this.editMode = false;
       }
-      else {
+
+      // -------------for submit data----------
+      else if (!this.emailVal) {
 
         // -----------pass customer data to customer display component------------
-
-
-        // this.sortArr.push({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
-
-        // this.sortArr.sort(function (a, b) {
-        //   const nameA = a.customerName();
-        //   const nameB = b.customerName();
-        //   if (nameA < nameB) {
-        //     return -1
-        //   }
-        //   if (nameA > nameB) {
-        //     return 1;
-        //   }
-        //   return 0;
-        // return a.customerName - b.customerName;
-        // });
-
-
-
-
-        // sortName(property: string) {
-        //   this.isDesc = !this.isDesc;
-
-        //   let direction = this.isDesc ? 1 : -1;
-        //   this.displayArr.sort(function (a, b) {
-        //     if (a[property] < b[property]) {
-        //       return -1 * direction;
-        //     }
-        //     else if (a[property] > b[property]) {
-        //       return 1 * direction;
-        //     }
-        //     else {
-        //       return 0;
-        //     }
-        //   });
-        // }
-
-        // console.log(this.sortArr);
         this.customerArr.push({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
         // this.customerdata.addToService({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
-        // console.log(this.customerArr);
-
-        // this.isDesc = true;
-
-        // let direction = this.isDesc ? 1 : -1;
-        // this.customerArr.sort(function (a, b) {
-        //   if (a[property] < b[property]) {
-        //     return -1 * direction;
-        //   }
-        //   else if (a[property] > b[property]) {
-        //     return 1 * direction;
-        //   }
-        //   else {
-        //     return 0;
-        //   }
-        // });
-        console.log('submit');
+        this.existsEmail = false;
+        console.log(this.customerArr);
       }
+      else if (this.emailVal) {
+        this.editMode = false;
+        this.existsEmail = true;
+      }
+
+
     }
 
-    else {
-      // -----display validation error---------
-      this.validName = true;
-      console.log(this.validName);
-    }
+    // --------display Error--------
 
     // ---------for reset value-------
     this.customerName = '';

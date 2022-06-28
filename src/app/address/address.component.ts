@@ -16,7 +16,7 @@ export class AddressComponent implements OnInit {
   // --------pass address value--------
   @Output() add = new EventEmitter<string>();
 
-  // ----------Placeholder------
+
 
 
   ngOnInit(): void {
