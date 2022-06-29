@@ -19,7 +19,7 @@
 
                 <!-- ------------Name------- -->
                 <tr>
-                    <th scope="col" class="tableHeader" (click)="sortName('Name')">Name
+                    <th scope="col" class="tableHeader" (click)="sortData('Name')">Name
                         <svg *ngIf="isDesc" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                             fill="currentColor" class="bi bi-sort-alpha-down-alt" viewBox="0 0 16 16">
                             <path
@@ -42,7 +42,7 @@
 
                     <!-- ------------Email------- -->
 
-                    <th scope="col" class="tableHeader" (click)="sortEmail('Email')">Email<svg *ngIf="Email"
+                    <th scope="col" class="tableHeader" (click)="sortData('Email')">Email<svg *ngIf="Email"
                             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-sort-alpha-down-alt" viewBox="0 0 16 16">
                             <path
@@ -64,7 +64,7 @@
 
                     <!-- ------------Address------- -->
 
-                    <th scope="col" class="tableHeader" (click)="sortAddress('Address')">Address
+                    <th scope="col" class="tableHeader" (click)="sortData('Address')">Address
                         <svg *ngIf="Address" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                             fill="currentColor" class="bi bi-sort-alpha-down-alt" viewBox="0 0 16 16">
                             <path
@@ -96,17 +96,17 @@
             <tbody>
 
                 <!-- ------display when table is emplty-- -->
-                <tr *ngFor=" let data of displayStatusArr" class="tableRow">
-                    <td class="">{{data.Name}}</td>
+                <tr *ngFor=" let data of displayStatusArr; let i = index" class="tableRow">
+                    <td>{{data.Name}}</td>
 
-                    <td class="">{{data.Email}}</td>
+                    <td>{{data.Email}}</td>
 
-                    <td class="add">{{data.Address}}</td>
+                    <td class="add" id="{{i}}" (click)="change(i)" [ngClass]="addClick">{{data.Address}}
+                    </td>
 
                     <td><span class="badge" [ngClass]="{
                     'active' : data.Status == 'Active' ,
-                    'inactive' : data.Status == 'Inactive' 
-                 }">{{data.Status}}</span></td>
+                    'inactive' : data.Status == 'Inactive'}">{{data.Status}}</span></td>
                     <td><button class="btn btn-outline-danger" (click)="onEdit(data)">Edit</button></td>
                 </tr>
 

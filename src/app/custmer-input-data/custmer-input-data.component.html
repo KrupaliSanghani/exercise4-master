@@ -49,9 +49,10 @@
             <div class="col-12 mb-5 my-3">
                 <button type="submit" id="submit" class="btn submit" disabled
                     [disabled]=" customerEmail === '' || customerAddress === '' || customerStatus === ''"
-                    (click)=" onSubmit()" (click)="sortName('Name')">{{editMode ? 'Update': 'Submit'}}</button>
+                    (click)=" onSubmit()" (click)="sort('Name')">{{editMode ? 'Update': 'Submit'}}</button>
             </div>
         </div>
+
 
 
         <div class="col-7">

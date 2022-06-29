@@ -26,13 +26,16 @@
    height: 6vh;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+
      } 
 
-
-.add:hover {
+.showAdd {
+    white-space: break-spaces;
     display:block;
     width:200px;
     overflow-y: hidden;
     word-wrap:break-word;
     height: auto;
+  
 }
