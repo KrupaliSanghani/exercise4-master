@@ -14,27 +14,12 @@ export class CustomerDisplayDataComponent implements OnInit, OnChanges {
   status: string = 'All';
   // displayArr = [];
 
-  displayInactiveArr = [];
   displayStatusArr = [];
 
   // -------sorting var------
   isDesc: boolean = true;
   Email: Boolean = true;
   Address: Boolean = true;
-
-  // -------show address-----
-  addClick: string;
-  clicked: boolean = false;
-
-
-  change(val) {
-    console.log(val);
-    document.getElementById(val).classList.toggle('showAdd');
-    console.log(document.getElementById(val));
-
-  }
-
-
 
   // --------status dropdown-----
   statusArr: { id: number, name: string }[] = [
@@ -46,6 +31,14 @@ export class CustomerDisplayDataComponent implements OnInit, OnChanges {
   // constructor(private customerdata: CustomerDataService) { }
 
   ngOnInit(): void {
+  }
+
+  // -------show address-----
+  change(val) {
+    console.log(val);
+    document.getElementById(val).classList.toggle('showAdd');
+    console.log(document.getElementById(val));
+
   }
 
   ngOnChanges() {

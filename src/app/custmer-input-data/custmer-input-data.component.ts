@@ -10,7 +10,7 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './custmer-input-data.component.html',
   styleUrls: ['./custmer-input-data.component.css']
 })
-export class CustmerInputDataComponent implements OnInit, AfterViewInit {
+export class CustmerInputDataComponent implements OnInit {
   @ViewChild(CustomerDisplayDataComponent) CustomerDisplayDataComponent!: CustomerDisplayDataComponent;
 
   // ------take inputs------------
@@ -29,31 +29,21 @@ export class CustmerInputDataComponent implements OnInit, AfterViewInit {
   validEmail: boolean = true;
   validAddress: boolean = false;
   existsEmail: boolean = false;
-  valid: string;
-  isDesc: boolean = true;
-
-
 
   // ------edit data------
   editMode: boolean = false;
 
   // -------store customer data---------
   customerArr = [];
-  // customerChangeArr = [];
-
-
 
   // ------------take address value from another component----
   getAddress(val: string) {
     this.customerAddress = val;
   }
 
+
   constructor(private cdref: ChangeDetectorRef) { }
 
-
-  ngAfterViewInit() {
-
-  }
 
   ngOnInit(): void {
   }
@@ -61,13 +51,7 @@ export class CustmerInputDataComponent implements OnInit, AfterViewInit {
 
   // ----------check email validation-----------
   ckeckEmail() {
-    this.valid = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
-    if (this.customerEmail.match(this.valid)) {
-      this.validEmail = true;
-    }
-    else {
-      this.validEmail = false;
-    }
+    this.customerEmail.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$") ? (this.validEmail = true) : (this.validEmail = false);
   }
 
   // ----------check name validation-----------
@@ -92,7 +76,7 @@ export class CustmerInputDataComponent implements OnInit, AfterViewInit {
 
     console.log(emailVal);
 
-    if (this.customerEmail.match(this.valid) && this.customerName !== ' ') {
+    if (this.customerEmail.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$") && this.customerName !== ' ') {
 
       // --------------for update data--------
 
@@ -102,8 +86,12 @@ export class CustmerInputDataComponent implements OnInit, AfterViewInit {
         this.editMode = true;
         customerChangeArr.push({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
         this.customerArr = this.customerArr.map(obj => customerChangeArr.find(o => o.Email === obj.Email) || obj);
-        console.log(customerChangeArr);
+        // console.log(customerChangeArr);
         this.editMode = false;
+        // ---------for reset value-------
+        this.customerName = '';
+        this.customerEmail = '';
+        this.customerAddress = '';
       }
 
       // -------------for submit data----------
@@ -125,9 +113,7 @@ export class CustmerInputDataComponent implements OnInit, AfterViewInit {
         this.existsEmail = true;
       }
 
-
     }
-
 
   }
 
