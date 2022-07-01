@@ -3,54 +3,62 @@
         <div class="col-5">
 
             <!-- -------customer form ------ -->
+            <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+                <h3 class=" heading">Customer Form</h3>
+                <div class="col-12 mt-4">
 
-            <h3 class=" heading">Customer Form</h3>
-            <div class="col-12 mt-4">
+                    <!-- ------------customer Name------------ -->
+                    <label for="name">Name:</label><br>
+                    <input required id="name" type="text" class=" mb-3" placeholder="Enter Name"
+                        formControlName="name"><br>
+                    <span
+                        *ngIf="!customerForm.get('name').valid && customerForm.get('name').touched && !customerForm.get('name')"
+                        class="help-block">Enter valid Amount.</span>
+                    <!-- <p *ngIf="validName" class="text-danger">{{nameError}}</p> -->
+                </div>
 
-                <!-- ------------customer Name------------ -->
-                <label for="name">Name:</label><br>
-                <input required id="name" type="text" (change)="ckeckName();" [(ngModel)]="customerName" class=" mb-3"
-                    placeholder="Enter Name"><br>
-                <p *ngIf="validName" class="text-danger">{{nameError}}</p>
-            </div>
+                <!-- ------------customer Email------------ -->
+                <div class="col-12">
+                    <label for="email">Email:</label><br>
+                    <input id="email" type="text" placeholder="Enter Email" [disabled]=" editMode == true"
+                        formControlName="name">
+                    <p *appUnless="validEmail" class="text-danger">{{emailError}}</p>
+                    <p *ngIf="existsEmail" class="text-danger">{{emailExists}}</p>
 
-            <!-- ------------customer Email------------ -->
-            <div class="col-12">
-                <label for="email">Email:</label><br>
-                <input id="email" type="text" (change)="ckeckEmail();" [(ngModel)]="customerEmail" class="mb-3"
-                    placeholder="Enter Email" [disabled]=" editMode == true">
-                <p *appUnless="validEmail" class="text-danger">{{emailError}}</p>
-                <p *ngIf="existsEmail" class="text-danger">{{emailExists}}</p>
-            </div>
+                    <span
+                        *ngIf="!customerForm.get('email').valid && customerForm.get('email').touched && !customerForm.get('email').pattern"
+                        class="help-block">Enter valid Amount.</span>
+                </div>
 
-            <!-- ------------customer Address------------ -->
-            <div class="col-12">
-                <app-address [Address]="customerAddress" (add)="getAddress($event)"></app-address>
-            </div>
+                <!-- ------------customer Address------------ -->
+                <div class="col-12">
+                    <app-address [Address]="customerAddress" (add)="getAddress($event)"></app-address>
+                </div>
 
-            <!-- ------------customer Status------------ -->
-            <div class="col-12 mt-2">
-                <label>Status:</label><br>
+                <!-- ------------customer Status------------ -->
+                <div class="col-12 mt-2">
+                    <label>Status:</label><br>
 
-                <!-- ----------active radio button------------ -->
-                <input type="radio" id="active" name="status" value="active" class="ms-3"
-                    (click)="customerStatus = 'Active'">
-                <label for="active" class="ms-2"> Active</label>
+                    <!-- ----------active radio button------------ -->
+                    <input type="radio" id="active" name="status" value="active" class="ms-3"
+                        (click)="customerStatus = 'Active'">
+                    <label for="active" class="ms-2"> Active</label>
 
 
-                <!-- ----------inactive radio button------------ -->
-                <input type="radio" id="inactive" name="status" value="inactive" class="ms-3"
-                    (click)="customerStatus = 'Inactive'">
-                <label for="inactive" class="ms-2"> Inactive</label><br>
+                    <!-- ----------inactive radio button------------ -->
+                    <input type="radio" id="inactive" name="status" value="inactive" class="ms-3"
+                        (click)="customerStatus = 'Inactive'">
+                    <label for="inactive" class="ms-2"> Inactive</label><br>
 
-            </div>
+                </div>
 
-            <!-- ------submit data----- -->
-            <div class="col-12 mb-5 my-3">
-                <button type="submit" id="submit" class="btn submit" disabled
-                    [disabled]=" customerEmail === '' || customerAddress === '' || customerStatus === ''"
-                    (click)=" onSubmit()" (click)="sort('Name')">{{editMode ? 'Update': 'Submit'}}</button>
-            </div>
+                <!-- ------submit data----- -->
+                <div class="col-12 mb-5 my-3">
+                    <button type="submit" id="submit" class="btn submit" disabled
+                        [disabled]=" customerEmail === '' || customerAddress === '' || customerStatus === ''"
+                        (click)=" onSubmit()" (click)="sort('Name')">{{editMode ? 'Update': 'Submit'}}</button>
+                </div>
+            </form>
         </div>
 
 

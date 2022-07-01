@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 // import { CustomerDataService } from './customer-data.service';
 
@@ -13,6 +13,7 @@ import { UnlessDirective } from './unless.directive';
 import { DataComponent } from './data/data.component';
 import { TextColorDirective } from './text-color.directive';
 import { NavbarComponent } from './navbar/navbar.component';
+// import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,13 @@ import { NavbarComponent } from './navbar/navbar.component';
     DataComponent,
     TextColorDirective,
     NavbarComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule
 
   ],
   providers: [],

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CustomerDisplayDataComponent } from '../customer-display-data/customer-display-data.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 // import { CustomerDataService } from '../customer-data.service';
 
 
@@ -12,6 +13,8 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class CustmerInputDataComponent implements OnInit {
   @ViewChild(CustomerDisplayDataComponent) CustomerDisplayDataComponent!: CustomerDisplayDataComponent;
+
+
 
   // ------take inputs------------
   customerName: string = '';
@@ -35,6 +38,7 @@ export class CustmerInputDataComponent implements OnInit {
 
   // -------store customer data---------
   customerArr = [];
+  customerForm: FormGroup;
 
   // ------------take address value from another component----
   getAddress(val: string) {
@@ -46,18 +50,23 @@ export class CustmerInputDataComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.customerForm = new FormGroup({
+      'name': new FormControl(null, Validators.required),
+      'email': new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/)]),
+      'address': new FormControl(null, Validators.required)
+    })
   }
 
 
   // ----------check email validation-----------
-  ckeckEmail() {
-    this.customerEmail.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$") ? (this.validEmail = true) : (this.validEmail = false);
-  }
+  // ckeckEmail() {
+  //   this.customerEmail.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$") ? (this.validEmail = true) : (this.validEmail = false);
+  // }
 
-  // ----------check name validation-----------
-  ckeckName() {
-    this.customerName == ' ' ? (this.validName = true) : (this.validName = false);
-  }
+  // // ----------check name validation-----------
+  // ckeckName() {
+  //   this.customerName == ' ' ? (this.validName = true) : (this.validName = false);
+  // }
 
 
   // ----------By default sort----------

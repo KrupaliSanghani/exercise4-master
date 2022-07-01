@@ -14,3 +14,7 @@
     background-color: rgb(93, 62, 228);
     color:white
 }
+
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}

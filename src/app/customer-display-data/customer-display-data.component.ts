@@ -34,7 +34,7 @@ export class CustomerDisplayDataComponent implements OnInit, OnChanges {
   }
 
   // -------show address-----
-  change(val) {
+  showAddress(val) {
     console.log(val);
     document.getElementById(val).classList.toggle('showAdd');
     console.log(document.getElementById(val));
