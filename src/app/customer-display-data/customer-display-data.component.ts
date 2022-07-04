@@ -52,7 +52,7 @@ export class CustomerDisplayDataComponent implements OnInit, OnChanges {
   onStatus() {
     // console.log(this.status);
     this.status == 'All' ? (this.displayStatusArr = this.displayArr) : (this.displayStatusArr = this.displayArr.filter(displayArr => displayArr.Status == this.status));
-
+    console.log(this.displayStatusArr);
   }
 
 

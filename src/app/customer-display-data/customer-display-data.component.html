@@ -95,7 +95,7 @@
 
             <tbody>
 
-                <!-- ------display when table is emplty-- -->
+                <!-- ------display data in table-- -->
                 <tr *ngFor=" let data of displayStatusArr; let i = index" class="tableRow">
                     <td>{{data.Name}}</td>
 
@@ -115,5 +115,5 @@
     </div>
 
     <!-- ---------No Customer Found------ -->
-    <div *ngIf="displayArr.length == 0" class="text-center">No Customer Found</div>
+    <div *ngIf="displayStatusArr.length == 0" class="text-center">No Customer Found</div>
 </div>

@@ -24,13 +24,13 @@ export class CustmerInputDataComponent implements OnInit {
 
 
   // -----display validation error---------
-  nameError: string = 'Enter Name';
-  emailError: string = 'Enter valid Email';
+  // nameError: string = 'Enter Name';
+  // emailError: string = 'Enter valid Email';
   emailExists: string = 'Email already exists.';
 
-  validName: boolean = false;
-  validEmail: boolean = true;
-  validAddress: boolean = false;
+  // validName: boolean = false;
+  // validEmail: boolean = true;
+  // validAddress: boolean = false;
   existsEmail: boolean = false;
 
   // ------edit data------
@@ -51,9 +51,8 @@ export class CustmerInputDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'email': new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/)]),
-      'address': new FormControl(null, Validators.required)
+      'customerName': new FormControl(null, Validators.required),
+      'customerEmail': new FormControl(null, [Validators.required, Validators.email]),
     })
   }
 
@@ -72,57 +71,66 @@ export class CustmerInputDataComponent implements OnInit {
   // ----------By default sort----------
 
   sort(property: any) {
+    this.CustomerDisplayDataComponent.isDesc = false;
     this.CustomerDisplayDataComponent.sortData(property);
-    console.log(this.CustomerDisplayDataComponent.sortData(property));
+    // console.log(this.CustomerDisplayDataComponent.sortData(property));
   }
 
 
   // ------------submit customer data---------
   onSubmit() {
 
+
+    // console.log(this.customerForm.value.customerName, this.customerForm.value.customerEmail);
+    // console.log(this.customerArr);
+
     // ----------check validation-----------
-    let emailVal = this.customerArr.find(element => element.Email == this.customerEmail);
-
+    // let emailVal = this.customerArr.find(element => element.Email == this.customerEmail);
+    let emailVal = this.customerArr.find(element => element.Email == this.customerForm.value.customerEmail);
     console.log(emailVal);
+    console.log(this.customerForm.value);
 
-    if (this.customerEmail.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$") && this.customerName !== ' ') {
+    // if (this.customerEmail.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$") && this.customerName !== ' ') {
 
-      // --------------for update data--------
+    // --------------for update data--------
 
-      if (this.editMode) {
-        const customerChangeArr = []
+    if (this.editMode) {
+      const customerChangeArr = []
 
-        this.editMode = true;
-        customerChangeArr.push({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
-        this.customerArr = this.customerArr.map(obj => customerChangeArr.find(o => o.Email === obj.Email) || obj);
-        // console.log(customerChangeArr);
-        this.editMode = false;
-        // ---------for reset value-------
-        this.customerName = '';
-        this.customerEmail = '';
-        this.customerAddress = '';
-      }
+      this.editMode = true;
+      customerChangeArr.push({ Name: this.customerForm.value.customerName, Email: this.customerForm.value.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
+      this.customerArr = this.customerArr.map(obj => customerChangeArr.find(o => o.Email === obj.Email) || obj);
+      // console.log(customerChangeArr);
 
-      // -------------for submit data----------
-      else if (!emailVal) {
-
-        // -----------pass customer data to customer display component------------
-        this.customerArr.push({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
-        // this.customerdata.addToService({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
-        this.existsEmail = false;
-        console.log(this.customerArr);
-
-        // ---------for reset value-------
-        this.customerName = '';
-        this.customerEmail = '';
-        this.customerAddress = '';
-      }
-      else if (emailVal) {
-        this.editMode = false;
-        this.existsEmail = true;
-      }
-
+      // ---------for reset value-------
+      this.customerForm.reset();
+      // this.customerName = '';
+      // this.customerEmail = '';
+      this.customerAddress = '';
+      this.editMode = false;
     }
+
+    // -------------for submit data----------
+    else if (!emailVal) {
+
+      // -----------pass customer data to customer display component------------
+      this.customerArr.push({ Name: this.customerForm.value.customerName, Email: this.customerForm.value.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
+      // this.customerdata.addToService({ Name: this.customerName, Email: this.customerEmail, Status: this.customerStatus, Address: this.customerAddress });
+      this.existsEmail = false;
+      console.log(this.customerArr);
+
+      // ---------for reset value-------
+      this.customerForm.reset();
+      this.customerName = '';
+      this.customerEmail = '';
+      this.customerAddress = '';
+    }
+    else if (emailVal) {
+      this.editMode = false;
+      this.existsEmail = true;
+    }
+
+    // }
 
   }
 
@@ -130,10 +138,14 @@ export class CustmerInputDataComponent implements OnInit {
 
   editName(val) {
     this.editMode = true;
-    this.customerName = val.Name;
-    this.customerEmail = val.Email;
+
+    this.customerForm.setValue({
+      customerName: val.Name,
+      customerEmail: val.Email,
+    })
     this.customerAddress = val.Address;
     this.customerStatus = val.Status;
+    console.log(val.Status)
   }
 
 }

@@ -10,10 +10,9 @@
                     <!-- ------------customer Name------------ -->
                     <label for="name">Name:</label><br>
                     <input required id="name" type="text" class=" mb-3" placeholder="Enter Name"
-                        formControlName="name"><br>
-                    <span
-                        *ngIf="!customerForm.get('name').valid && customerForm.get('name').touched && !customerForm.get('name')"
-                        class="help-block">Enter valid Amount.</span>
+                        formControlName="customerName"><br>
+                    <span *ngIf="!customerForm.get('customerName').valid && customerForm.get('customerName').touched"
+                        class="help-block text-danger">Enter valid Name.</span>
                     <!-- <p *ngIf="validName" class="text-danger">{{nameError}}</p> -->
                 </div>
 
@@ -21,13 +20,12 @@
                 <div class="col-12">
                     <label for="email">Email:</label><br>
                     <input id="email" type="text" placeholder="Enter Email" [disabled]=" editMode == true"
-                        formControlName="name">
-                    <p *appUnless="validEmail" class="text-danger">{{emailError}}</p>
+                        formControlName="customerEmail"><br>
+                    <!-- <p *appUnless="validEmail" class="text-danger">{{emailError}}</p> -->
                     <p *ngIf="existsEmail" class="text-danger">{{emailExists}}</p>
 
-                    <span
-                        *ngIf="!customerForm.get('email').valid && customerForm.get('email').touched && !customerForm.get('email').pattern"
-                        class="help-block">Enter valid Amount.</span>
+                    <span *ngIf="!customerForm.get('customerEmail').valid && customerForm.get('customerEmail').touched"
+                        class="help-block text-danger">Enter valid Email.</span><br><br>
                 </div>
 
                 <!-- ------------customer Address------------ -->
@@ -40,13 +38,13 @@
                     <label>Status:</label><br>
 
                     <!-- ----------active radio button------------ -->
-                    <input type="radio" id="active" name="status" value="active" class="ms-3"
+                    <input type="radio" name="Status" id="active" value=active class="ms-3"
                         (click)="customerStatus = 'Active'">
                     <label for="active" class="ms-2"> Active</label>
 
 
                     <!-- ----------inactive radio button------------ -->
-                    <input type="radio" id="inactive" name="status" value="inactive" class="ms-3"
+                    <input type="radio" name="Status" id="inactive" value=inactive class="ms-3"
                         (click)="customerStatus = 'Inactive'">
                     <label for="inactive" class="ms-2"> Inactive</label><br>
 
@@ -54,9 +52,8 @@
 
                 <!-- ------submit data----- -->
                 <div class="col-12 mb-5 my-3">
-                    <button type="submit" id="submit" class="btn submit" disabled
-                        [disabled]=" customerEmail === '' || customerAddress === '' || customerStatus === ''"
-                        (click)=" onSubmit()" (click)="sort('Name')">{{editMode ? 'Update': 'Submit'}}</button>
+                    <button type="submit" id="submit" class="btn submit" [disabled]="!customerForm.valid"
+                        (click)="sort('Name')">{{editMode ? 'Update': 'Submit'}}</button>
                 </div>
             </form>
         </div>
